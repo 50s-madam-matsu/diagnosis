@@ -7,41 +7,40 @@
 <style>
 html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Mincho ProN', serif; background: #fff8f8; color: #555; padding-bottom: 50px; }
-.card { max-width: 500px; margin: 20px auto; padding: 25px; background: rgba(255, 255, 255, 0.96); border-radius: 20px; border: 2px solid #f8bbd0; box-shadow: 0 10px 30px rgba(248, 187, 208, 0.3); box-sizing: border-box; }
+.card { max-width: 500px; margin: 15px auto; padding: 20px; background: rgba(255, 255, 255, 0.96); border-radius: 20px; border: 2px solid #f8bbd0; box-shadow: 0 10px 30px rgba(248, 187, 208, 0.3); box-sizing: border-box; }
 .progress { height:8px; background:#f0f0f0; border-radius:10px; margin-bottom:25px; overflow:hidden; }
 .progress-bar { height:100%; background:linear-gradient(to right, #ffb1c1, #ff5c8a); width:0%; transition: 0.5s; }
 .question { font-size:1.2em; font-weight:bold; margin-bottom:20px; color:#d81b60; text-align: center; }
-.btn { display:block; width:100%; padding:16px; margin:12px 0; font-size:16px; border:none; border-radius:50px; background: linear-gradient(180deg, #f9e1a9, #e6c986); color:#5d4037; font-weight:bold; cursor:pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: 0.3s; text-decoration: none; text-align: center; }
-.btn-sub { background: #fff; border: 2px solid #f8bbd0; color: #d81b60; margin-top: 10px; }
+/* ボタンのスタイルをスマホ最適化 */
+.btn { display:block; width:90%; margin: 10px auto; padding: 14px 5px; font-size:15px; border:none; border-radius:50px; background: linear-gradient(180deg, #f9e1a9, #e6c986); color:#5d4037; font-weight:bold; cursor:pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: 0.3s; text-decoration: none; text-align: center; box-sizing: border-box; }
+.btn-sub { background: #fff !important; border: 2px solid #f8bbd0 !important; color: #d81b60 !important; box-shadow: none !important; padding: 10px 5px !important; font-size: 14px !important; }
 .check-item { display: block; width: 90%; margin: 8px auto; padding: 12px; background:#fff; border-radius:12px; border:1px solid #f8bbd0; cursor:pointer; font-size: 15px; text-align: center; }
 .check-item input { display:none; }
 .check-item.selected { background:#ffebf0; border-color:#ff5c8a; color:#d81b60; font-weight:bold; }
-.result-card { background:#fff; border-radius:15px; padding:20px; margin:20px 0; border: 1px solid #fce4ec; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
-.cast-img { width:100%; max-width:220px; border-radius:15px; margin-bottom:15px; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); pointer-events: none; }
-.rank-badge { display:inline-block; padding:4px 15px; background:#d4af37; color:#fff; border-radius:20px; font-size:0.9em; margin-bottom:12px; font-weight: bold; }
+.result-card { background:#fff; border-radius:15px; padding:15px; margin:15px 0; border: 1px solid #fce4ec; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
+.cast-img { width:100%; max-width:200px; border-radius:15px; margin-bottom:12px; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); pointer-events: none; }
+.rank-badge { display:inline-block; padding:4px 15px; background:#d4af37; color:#fff; border-radius:20px; font-size:0.9em; margin-bottom:10px; font-weight: bold; }
 .hidden { display:none !important; }
 img { -webkit-touch-callout: none; user-select: none; }
 #title-page { text-align: center; padding: 20px 0; }
 .main-title { font-size: 1.8em; color: #d81b60; margin-bottom: 10px; }
 .sub-title { font-size: 0.9em; color: #888; margin-bottom: 25px; line-height: 1.6; }
-.no-match { text-align: center; padding: 20px 10px; color: #d81b60; font-weight: bold; }
-.pickup-title { font-size: 1em; color: #d81b60; border-bottom: 1px solid #f8bbd0; padding-bottom: 5px; margin-top: 30px; }
+.no-match { text-align: center; padding: 15px 10px; color: #d81b60; font-weight: bold; }
+.pickup-title { font-size: 0.95em; color: #d81b60; border-bottom: 1px solid #f8bbd0; padding-bottom: 5px; margin-top: 25px; text-align: center; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <div class="card">
     <div id="title-page">
-        <h1 class="main-title">五十路マダム診断</h1>
+        <h1 class="main-title">五十路マダム 松山店<br>マダム診断</h1>
         <p class="sub-title">今のあなたの気分に合わせて<br>ピッタリなマダムをご提案します</p>
         <button class="btn" onclick="startQuiz()">診断をはじめる</button>
     </div>
-
     <div id="quiz-area" class="hidden">
         <div class="progress"><div id="bar" class="progress-bar"></div></div>
         <div id="quiz"></div>
     </div>
-
     <div id="result" class="hidden"></div>
 </div>
 
@@ -129,35 +128,35 @@ function showResult(){
     let html = "";
     if (filtered.length === 0) {
         html = `<div class="no-match">
-            <p>条件に完璧に一致するマダムは<br>現在お出かけ中のようです…</p>
-            <p style="font-size: 0.85em; color: #888; margin-top:10px;">「正直な診断」をモットーにしております！</p>
+            <p>条件に完全に一致するマダムは<br>現在いないようです…</p>
+            <p style="font-size: 0.8em; color: #888; margin-top:8px; font-weight:normal;">「正直な診断」をモットーにしております！</p>
         </div>`;
     } else {
         let sorted = filtered.map(c => ({...c, score:getScore(c)})).sort((a,b) => b.score - a.score);
-        html = `<h2 style="color:#d81b60; text-align:center;">あなたにピッタリな女性</h2>`;
+        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">ピッタリな女性はこちら</h2>`;
         sorted.slice(0, 2).forEach((c, i) => {
             html += `<div class="result-card" style="text-align:center;">
                 <div class="rank-badge">${i+1}位：相性 ${Math.min(99, 90 + c.score)}%</div><br>
                 <img src="${c.img}" class="cast-img" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
-                <div style="font-size:1.3em; font-weight:bold; color:#e91e63; margin-bottom:8px;">${c.name}</div>
-                <p style="font-size:1.0em; font-weight:bold; margin:5px 0; color:#444;">${c.spec}</p>
-                <p style="font-size:0.95em; margin:5px 0; color:#666;">${c.realAge}歳 / ${c.style} / ${c.type}</p>
-                <p style="font-size:0.85em; color:#777; margin:15px 0; line-height:1.6; padding:0 10px; text-align:left;">${c.memo}</p>
-                <a href="${c.profile}" target="_blank" class="btn" style="width:85%;">詳細プロフィールを見る</a>
+                <div style="font-size:1.2em; font-weight:bold; color:#e91e63; margin-bottom:5px;">${c.name}</div>
+                <p style="font-size:0.9em; font-weight:bold; margin:3px 0; color:#444;">${c.spec}</p>
+                <p style="font-size:0.85em; margin:3px 0; color:#666;">${c.realAge}歳 / ${c.style} / ${c.type}</p>
+                <p style="font-size:0.8em; color:#777; margin:10px 0; line-height:1.5; padding:0 5px; text-align:left;">${c.memo}</p>
+                <a href="${c.profile}" target="_blank" class="btn btn-sub" style="width:90%;">プロフィール詳細</a>
             </div>`;
         });
     }
 
     let pickup = castData[Math.floor(Math.random() * castData.length)];
-    html += `<div class="pickup-title">Pick Up! こんなマダムはいかが？</div>
-        <div class="result-card" style="text-align:center; background: #fffcfc;">
-            <img src="${pickup.img}" class="cast-img" style="max-width:150px;" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
-            <div style="font-weight:bold; color:#e91e63;">${pickup.name}</div>
-            <a href="${pickup.profile}" target="_blank" class="btn btn-sub" style="font-size:14px; padding:10px;">このマダムを詳しく見る</a>
+    html += `<div class="pickup-title">＼ こちらのマダムもおすすめ ／</div>
+        <div class="result-card" style="text-align:center; background: #fffcfc; padding: 10px;">
+            <img src="${pickup.img}" class="cast-img" style="max-width:130px; margin-bottom:8px;" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
+            <div style="font-weight:bold; color:#e91e63; font-size:1em; margin-bottom:8px;">${pickup.name}</div>
+            <a href="${pickup.profile}" target="_blank" class="btn btn-sub" style="width:80%; padding:8px !important; font-size:13px !important;">プロフィールを見る</a>
         </div>`;
     
-    html += `<a href="https://xn--vus92eq8nn9j.com/" target="_blank" class="btn" style="background: linear-gradient(180deg, #ffb1c1, #ff8da1); color:#fff; margin-top:20px;">オフィシャルサイトで全員見る</a>`;
-    html += `<button class="btn btn-sub" onclick="location.reload()">もう一度診断する</button>`;
+    html += `<a href="https://xn--vus92eq8nn9j.com/" target="_blank" class="btn" style="background: linear-gradient(180deg, #ffb1c1, #ff8da1); color:#fff; margin-top:15px; font-size:14px;">オフィシャルサイトで探す</a>`;
+    html += `<button class="btn btn-sub" style="margin-top:10px;" onclick="location.reload()">もう一度診断する</button>`;
 
     document.getElementById("quiz-area").classList.add("hidden");
     const resArea = document.getElementById("result");
