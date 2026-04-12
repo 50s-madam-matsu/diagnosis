@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>あなたにピッタリな女の子診断</title>
+<title>運命の熟女診断</title>
 <style>
 html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Mincho ProN', serif; background: #fff8f8; color: #555; padding-bottom: 50px; }
@@ -22,17 +22,20 @@ body { font-family: 'Hiragino Mincho ProN', serif; background: #fff8f8; color: #
 .hidden { display:none !important; }
 img { -webkit-touch-callout: none; user-select: none; }
 #title-page { text-align: center; padding: 20px 0; }
-.main-title { font-size: 1.8em; color: #d81b60; margin-bottom: 10px; }
+.main-title { font-size: 1.8em; color: #d81b60; margin-bottom: 10px; font-weight: bold; }
 .sub-title { font-size: 0.9em; color: #888; margin-bottom: 25px; line-height: 1.6; }
 .no-match { text-align: center; padding: 15px 10px; color: #d81b60; font-weight: bold; }
 .pickup-title { font-size: 0.95em; color: #d81b60; border-bottom: 1px solid #f8bbd0; padding-bottom: 5px; margin-top: 25px; text-align: center; font-weight: bold; }
+.title-logo { width: 100%; max-width: 380px; height: auto; margin-bottom: 15px; }
 </style>
 </head>
 <body>
 
 <div class="card">
     <div id="title-page">
-        <h1 class="main-title">五十路マダム 松山店<br>マダム診断</h1>
+        <img src="logo.png" class="title-logo" alt="運命の熟女診断" onerror="this.style.display='none'; document.getElementById('text-title').style.display='block';">
+        <h1 id="text-title" class="main-title" style="display:none;">運命の熟女診断</h1>
+        
         <p class="sub-title">今のあなたの気分に合わせて<br>ピッタリなマダムをご提案します</p>
         <button class="btn" onclick="startQuiz()">診断をはじめる</button>
     </div>
@@ -127,7 +130,7 @@ function showResult(){
     let html = "";
     if (filtered.length === 0) {
         html = `<div class="no-match">
-            <p>条件に完全に一致するマダムは<br>現在いないようです…</p>
+            <p>条件に完璧に一致するマダムは<br>現在お出かけ中のようです…</p>
             <p style="font-size: 0.8em; color: #888; margin-top:8px; font-weight:normal;">「正直な診断」をモットーにしております！</p>
         </div>`;
     } else {
