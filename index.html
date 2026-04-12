@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>あなたにピッタリな女の子診断</title>
 <style>
-/* スタイル設定（変更なし） */
+/* --- デザイン設定 --- */
 html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Mincho ProN', serif; background: #fff8f8; color: #555; padding-bottom: 50px; }
 .card { max-width: 500px; margin: 20px auto; padding: 25px; background: rgba(255, 255, 255, 0.96); border-radius: 20px; border: 2px solid #f8bbd0; box-shadow: 0 10px 30px rgba(248, 187, 208, 0.3); box-sizing: border-box; }
@@ -13,13 +13,24 @@ body { font-family: 'Hiragino Mincho ProN', serif; background: #fff8f8; color: #
 .progress-bar { height:100%; background:linear-gradient(to right, #ffb1c1, #ff5c8a); width:0%; transition: 0.5s; }
 .question { font-size:1.2em; font-weight:bold; margin-bottom:20px; color:#d81b60; text-align: center; }
 .btn { display:block; width:100%; padding:16px; margin:12px 0; font-size:16px; border:none; border-radius:50px; background: linear-gradient(180deg, #f9e1a9, #e6c986); color:#5d4037; font-weight:bold; cursor:pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: 0.3s; text-decoration: none; text-align: center; }
+.btn:hover { opacity: 0.9; transform: translateY(-1px); }
 .check-item { display: block; width: 90%; margin: 8px auto; padding: 12px; background:#fff; border-radius:12px; border:1px solid #f8bbd0; cursor:pointer; font-size: 15px; text-align: center; transition: 0.2s; }
 .check-item input { display:none; }
 .check-item.selected { background:#ffebf0; border-color:#ff5c8a; color:#d81b60; font-weight:bold; }
 .result-card { background:#fff; border-radius:15px; padding:20px; margin:20px 0; border: 1px solid #fce4ec; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
-.cast-img { width:100%; max-width:220px; border-radius:15px; margin-bottom:15px; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.cast-img { width:100%; max-width:220px; border-radius:15px; margin-bottom:15px; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); pointer-events: none; /* クリック無効化の補助 */ }
 .rank-badge { display:inline-block; padding:4px 15px; background:#d4af37; color:#fff; border-radius:20px; font-size:0.9em; margin-bottom:12px; font-weight: bold; }
 .hidden { display:none; }
+
+/* 画像保護用CSS */
+img {
+    -webkit-touch-callout: none; /* iOS長押し禁止 */
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;           /* 選択禁止 */
+}
 </style>
 </head>
 <body>
@@ -31,8 +42,7 @@ body { font-family: 'Hiragino Mincho ProN', serif; background: #fff8f8; color: #
 </div>
 
 <script>
-// --- キャストデータ登録（実年齢表示版） ---
-// ageGroupは診断用、realAgeは表示用に使用します
+// --- 【キャストデータ】 ---
 const castData = [
     { name: "荒井美保さん", realAge: "43", ageGroup: "40代", height: "普通", cup: "普通", style: "スレンダー", type: "癒し系", play: "イチャイチャ", lead: "こだわらない", spec: "T158 ・ 86 (C) ・ 60 ・ 87", memo: "人懐っこい性格でイチャイチャ好きの美保さん♪お洒落なファッションセンスも抜群に輝き、男性を虜にする存在そのものに違いありません。", img: "arai01.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2023120213360884867634478" },
     { name: "石田美希さん", realAge: "57", ageGroup: "50代", height: "長身", cup: "大きめ", style: "ぽっちゃり", type: "色気系", play: "エロ重視", lead: "こだわらない", spec: "T164 ・ 103 (G) ・ 76 ・ 97", memo: "フレンドリーな笑顔が周りを明るくし、テクニシャンとしての繊細なサービスが心を溶かすような雰囲気を作り出します。", img: "ishida04.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2016030811380645706121902" },
@@ -51,7 +61,7 @@ const questions = [
     { key:"style", text:"Q1. 好みの体型は？", options:["スレンダー","普通","ぽっちゃり"]},
     { key:"type", text:"Q2. どちらのタイプに惹かれますか？", options:["清楚系", "色気系", "素人系", "癒し系", "元気系"]},
     { key:"play", text:"Q3. どちらが好みですか？", options:["イチャイチャ","エロ重視"]},
-    { key:"lead", text:"Q4. プレイ中の雰囲気は？", options:["僕がリードしたい", "リードされたい", "こだわらない"]},
+    { key:"lead", text:"Q4. プレイ中の雰囲気は？", options:["僕がリードしたい", "マダムにリードされたい", "こだわらない"]},
     { 
         key:"multi", 
         text:"Q5. こだわり条件（複数選択OK）", 
@@ -79,11 +89,10 @@ function render(){
         html += `<button class="btn" style="margin-top:20px;" onclick="saveMulti()">診断結果を見る</button>`;
     } else {
         q.options.forEach(o => {
-            let label = o;
             let val = o;
             if(o === "僕がリードしたい") val = "リードしたい";
-            if(o === "リードされたい") val = "リードされたい";
-            html += `<button class="btn" onclick="save('${q.key}','${val}')">${label}</button>`;
+            if(o === "マダムにリードされたい") val = "リードされたい";
+            html += `<button class="btn" onclick="save('${q.key}','${val}')">${o}</button>`;
         });
     }
     document.getElementById("quiz").innerHTML = html;
@@ -117,7 +126,7 @@ function showResult(){
             <p style="font-size:1.0em; font-weight:bold; margin:5px 0; color:#444;">${c.spec}</p>
             <p style="font-size:0.95em; margin:5px 0; color:#666;">${c.realAge}歳 / ${c.style} / ${c.type}</p>
             <p style="font-size:0.85em; color:#777; margin:15px 0; line-height:1.6; padding:0 10px; text-align:left;">${c.memo}</p>
-            <a href="${c.profile}" class="btn" style="width:85%;">詳細プロフィールを見る</a>
+            <a href="${c.profile}" target="_blank" class="btn" style="width:85%;">詳細プロフィールを見る</a>
         </div>`;
     });
     html += `<button class="btn" style="background:#fce4ec; color:#d81b60; border:1px solid #f8bbd0; margin-top:20px;" onclick="location.reload()">もう一度診断する</button>`;
@@ -127,6 +136,11 @@ function showResult(){
     resArea.innerHTML = html;
     window.scrollTo(0, 0); 
 }
+
+// 右クリック＆ドラッグ禁止
+document.addEventListener('contextmenu', e => { if (e.target.nodeName === 'IMG') e.preventDefault(); }, false);
+document.addEventListener('dragstart', e => { if (e.target.nodeName === 'IMG') e.preventDefault(); }, false);
+
 render();
 </script>
 </body>
