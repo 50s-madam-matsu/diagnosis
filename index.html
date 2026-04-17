@@ -135,16 +135,18 @@ function showResult(){
         </div>`;
     } else {
         let sorted = filtered.map(c => ({...c, score:getScore(c)})).sort((a,b) => b.score - a.score);
-        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">ピッタリな女性はこちら</h2>`;
-        sorted.slice(0, 2).forEach((c, i) => {
-            html += `<div class="result-card" style="text-align:center;">
-                <div class="rank-badge">${i+1}位：相性 ${Math.min(99, 90 + c.score)}%</div><br>
-                <img src="${c.img}" class="cast-img" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
-                <div style="font-size:1.2em; font-weight:bold; color:#e91e63; margin-bottom:5px;">${c.name}</div>
-                <p style="font-size:0.9em; font-weight:bold; margin:3px 0; color:#444;">${c.spec}</p>
-                <p style="font-size:0.85em; margin:3px 0; color:#666;">${c.realAge}歳 / ${c.style} / ${c.type}</p>
-                <p style="font-size:0.8em; color:#777; margin:10px 0; line-height:1.5; padding:0 5px; text-align:left;">${c.memo}</p>
-                <a href="${c.profile}" target="_blank" class="btn btn-sub" style="width:90%;">プロフィール詳細</a>
+        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">相性の良いマダムTOP3</h2>`;
+        
+        sorted.slice(0, 3).forEach((c, i) => {
+            const isFirst = i === 0;
+            html += `<div class="result-card" style="text-align:center; ${!isFirst ? 'padding:10px; margin:10px 0;' : ''}">
+                <div class="rank-badge" style="${!isFirst ? 'background:#b0bec5; font-size:0.8em;' : ''}">${i+1}位：相性 ${Math.min(99, 90 + c.score)}%</div><br>
+                <img src="${c.img}" class="cast-img" style="${!isFirst ? 'max-width:160px;' : ''}" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
+                <div style="font-size:${isFirst ? '1.2em' : '1.1em'}; font-weight:bold; color:#e91e63; margin-bottom:5px;">${c.name}</div>
+                <p style="font-size:0.85em; font-weight:bold; margin:3px 0; color:#444;">${c.spec}</p>
+                <p style="font-size:0.8em; margin:3px 0; color:#666;">${c.realAge}歳 / ${c.style} / ${c.type}</p>
+                ${isFirst ? `<p style="font-size:0.8em; color:#777; margin:10px 0; line-height:1.5; padding:0 5px; text-align:left;">${c.memo}</p>` : ''}
+                <a href="${c.profile}" target="_blank" class="btn btn-sub" style="width:85%; padding:8px !important; font-size:13px !important; margin-top:10px;">プロフィール詳細</a>
             </div>`;
         });
     }
