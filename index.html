@@ -156,21 +156,20 @@ function showResult(){
         </div>`;
     } else {
 
-        let sorted = filtered.map(c => ({...c, score:getScore(c)}))
-            .sort((a,b) => {
-                if (b.score !== a.score) {
-                    return b.score - a.score;
-                }
-                return Math.random() - 0.5;
-            });
+        let sorted = filtered.map(c => {
 
+            let randomPoint = Math.random() * 0.9;
+            return {...c, score: getScore(c) + randomPoint};
+        }).sort((a,b) => b.score - a.score);
 
         html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">相性の良いマダムTOP3</h2>`;
         
         sorted.slice(0, 3).forEach((c, i) => {
             const isFirst = i === 0;
+            let displayPercent = (Math.min(99, 90 + Math.floor(c.score)) + (c.score % 1)).toFixed(1);
+            
             html += `<div class="result-card" style="text-align:center; ${!isFirst ? 'padding:10px; margin:10px 0;' : ''}">
-                <div class="rank-badge" style="${!isFirst ? 'background:#b0bec5; font-size:0.8em;' : ''}">${i+1}位：相性 ${Math.min(99, 90 + c.score)}%</div><br>
+                <div class="rank-badge" style="${!isFirst ? 'background:#b0bec5; font-size:0.8em;' : ''}">${i+1}位：相性 ${displayPercent}%</div><br>
                 <img src="${c.img}" class="cast-img" style="${!isFirst ? 'max-width:160px;' : ''}" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
                 <div style="font-size:${isFirst ? '1.2em' : '1.1em'}; font-weight:bold; color:#e91e63; margin-bottom:5px;">${c.name}</div>
                 <p style="font-size:0.85em; font-weight:bold; margin:3px 0; color:#444;">${c.spec}</p>
@@ -187,10 +186,9 @@ function showResult(){
             <img src="${pickup.img}" class="cast-img" style="max-width:130px; margin-bottom:8px;" onerror="this.src='https://via.placeholder.com/250x350?text=Photo'">
             <div style="font-weight:bold; color:#e91e63; font-size:1em; margin-bottom:8px;">${pickup.name}</div>
             <a href="${pickup.profile}" target="_blank" class="btn btn-sub" style="width:80%; padding:8px !important; font-size:13px !important;">プロフィールを見る</a>
-        </div>`;
-    
-    html += `<a href="https://xn--vus92eq8nn9j.com/" target="_blank" class="btn" style="background: linear-gradient(180deg, #ffb1c1, #ff8da1); color:#fff; margin-top:15px; font-size:14px;">オフィシャルサイトで探す</a>`;
-    html += `<button class="btn btn-sub" style="margin-top:10px;" onclick="location.reload()">もう一度診断する</button>`;
+        </div>
+        <a href="https://xn--vus92eq8nn9j.com/" target="_blank" class="btn" style="background: linear-gradient(180deg, #ffb1c1, #ff8da1); color:#fff; margin-top:15px; font-size:14px;">オフィシャルサイトで探す</a>
+        <button class="btn btn-sub" style="margin-top:10px;" onclick="location.reload()">もう一度診断する</button>`;
 
     document.getElementById("quiz-area").classList.add("hidden");
     const resArea = document.getElementById("result");
