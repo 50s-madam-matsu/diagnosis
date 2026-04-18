@@ -144,12 +144,12 @@ function showResult(){
     let html = "";
     if (filtered.length === 0) {
         html = `<div class="no-match">
-            <p>条件に完璧に一致するマダムは<br>現在お出かけ中のようです…</p>
+            <p>条件に完璧に一致するマダムは<br>現在いないようです…</p>
             <p style="font-size: 0.8em; color: #888; margin-top:8px; font-weight:normal;">「正直な診断」をモットーにしております！</p>
         </div>`;
     } else {
         let sorted = filtered.map(c => ({...c, score:getScore(c)})).sort((a,b) => b.score - a.score);
-        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">相性の良いマダムTOP3</h2>`;
+        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">おすすめマダム</h2>`;
         
         sorted.slice(0, 3).forEach((c, i) => {
             const isFirst = i === 0;
