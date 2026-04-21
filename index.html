@@ -83,7 +83,7 @@ const castData = [
     { name: "川上菜々子さん", realAge: "51", ageGroup: "50代", height: "長身", cup: "普通", style: "普通", type: "癒し系", play: "エロ重視", lead: "どっちも", spec: "T165 ・ 90 (D) ・ 66 ・ 91", memo: "さらに菜々子さんのテクニシャンとしての腕前は、愛嬌たっぷりなサービスで夢心地に導いてくれます", img: "kawakami03.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2021113014394055727731935" },
     { name: "北山輝美さん", realAge: "54", ageGroup: "50代", height: "長身", cup: "大きめ", style: "ぽっちゃり", type: "色気系", play: "エロ重視", lead: "どっちも", spec: "T166 ・ 101 (E) ・ 84 ・ 96", memo: "166cmのモデル級スタイルに宿る母性。上品な笑顔と優しい人柄に包まれれば、初めて会った瞬間から虜になるはず。温かな包容力で、心と体を優しく癒やします。", img: "kitayama06.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2025021810073589518702600" },
     { name: "木本亜矢さん", realAge: "57", ageGroup: "50代", height: "普通", cup: "普通", style: "普通", type: "癒し系", play: "エロ重視", lead: "どっちも", spec: "T153 ・ 91 (D) ・ 71 ・ 93", memo: "上品な笑顔と色気溢れる視線が男性の心を捉えます。受け身好きでご奉仕を心がける姿勢が甘く蕩ける雰囲気を醸し出しています", img: "kimoto01.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2023071718524222922626359" },
-    { name: "栗原咲さん", realAge: "66", ageGroup: "60代", height: "小柄", cup: "普通", style: "ぽっちゃり", type: "色気系", play: "イチャイチャ", lead: "リードしたい", spec: "T154 ・ 96 (C) ・ 78 ・ 93", memo: "上品な色気を纏った、若々しく瑞々しい曲線美。優しく包み込む包容力と、時折のぞかせるド淫乱な素顔のギャップに興奮を抑えきれなくなるはず。小柄な体に秘めた情熱を肌で感じてください", img: "kurihara04.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2016011521400623106318149" },
+    { name: "栗原咲さん", realAge: "66", ageGroup: "60代", height: "小柄", cup: "普通", style: "ぽっちゃり", type: "色気系", play: "イチャイチャ", lead: "リードしたい", spec: "T154 ・ 96 (C) ・ 78 ・ 93", memo: "上品な色気を纏った、若々しく瑞々しい曲線美。優しく包み込む包容力と、時折のぞかせるド淫乱な素顔のギャップに興奮を抑きれなくなるはず。小柄な体に秘めた情熱を肌で感じてください", img: "kurihara04.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2016011521400623106318149" },
     { name: "白石友紀さん", realAge: "42", ageGroup: "40代", height: "普通", cup: "普通", style: "ぽっちゃり", type: "癒し系", play: "イチャイチャ", lead: "どっちも", spec: "T156 ・ 95 (C) ・ 78 ・ 95", memo: "飾らない可愛さと人懐っこい笑顔で、一瞬にして心を掴む「無邪気な癒やし系」。初めて会う人さえも自然と笑顔にさせてしまう明るさが魅力です。心の距離をスッと縮めて、優しく寄り添ってくれます", img: "shiraishi01.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2021082411102005970724152" },
     { name: "世良あいさん", realAge: "47", ageGroup: "40代", height: "普通", cup: "小さめ", style: "普通", type: "色気系", play: "エロ重視", lead: "どっちも", spec: "T153 ・ 87 (B) ・ 75 ・ 95", memo: "明るい笑顔が周りを和ませ、癒し系のお姉さんとして親しみやすさ抜群。訪れる男性を虜にせずにはいられないんです", img: "sera06.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2024080709290493631724546" },
     { name: "高井まどかさん", realAge: "49", ageGroup: "40代", height: "長身", cup: "普通", style: "ぽっちゃり", type: "色気系", play: "エロ重視", lead: "どっちも", spec: "T161 ・ 99 (D) ・ 78 ・ 96", memo: "話し好きでマッサージも得意な彼女。ムチムチとした柔らかなボディが女性らしい丸みを強調し、忘れられない時間を約束します", img: "takai06.jpg", profile: "https://xn--vus92eq8nn9j.com/?DOC=lady_prof&GID=2019042915452030714617659" },
@@ -141,8 +141,24 @@ function render(){
 }
 
 function toggleLabel(val){ document.getElementById('label-'+val).classList.toggle('selected'); }
-function save(key,val){ answers[key]=val; step++; render(); }
-function saveMulti(){ document.querySelectorAll("input:checked").forEach(el => answers.multi.push(el.value)); showResult(); }
+
+
+function save(key,val){ 
+    answers[key]=val; 
+    gtag('event', 'select_content', { 'content_type': 'question_answer', 'item_id': key + '_' + val });
+    step++; 
+    render(); 
+}
+
+
+function saveMulti(){ 
+    document.querySelectorAll("input:checked").forEach(el => {
+        answers.multi.push(el.value);
+        gtag('event', 'select_content', { 'content_type': 'multi_condition', 'item_id': el.value });
+    }); 
+    showResult(); 
+}
+
 function updateProgress(){ document.getElementById("bar").style.width = (step / questions.length) * 100 + "%"; }
 
 function getScore(c){
@@ -175,12 +191,13 @@ function showResult(){
     } else {
 
         let sorted = filtered.map(c => {
-
             let randomPoint = Math.random() * 0.9;
             return {...c, score: getScore(c) + randomPoint};
         }).sort((a,b) => b.score - a.score);
 
-        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">相性の良いマダムTOP3</h2>`;
+        gtag('event', 'view_search_results', { 'search_term': sorted[0].name });
+
+        html = `<h2 style="color:#d81b60; text-align:center; font-size:1.3em;">相性の良いマダムはこちら♪</h2>`;
         
         sorted.slice(0, 3).forEach((c, i) => {
             const isFirst = i === 0;
