@@ -115,7 +115,7 @@ body {
 /* ========== Title Section ========== */
 #title-page {
   text-align: center;
-  padding: 30px 0;
+  padding: 20px 0;
   animation: fadeIn 0.8s ease;
 }
 
@@ -145,8 +145,8 @@ body {
   max-width: 400px;
   height: auto;
   margin-bottom: 25px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(216, 27, 96, 0.15);
+  border-radius: 0;
+  box-shadow: none;
   animation: fadeIn 1s ease;
 }
 
@@ -547,7 +547,7 @@ img {
       <div class="info-box">
         <p class="info-box-title">💡 ご利用の前に</p>
         <div class="info-box-content">
-          ※本診断は相性の目安を提案するもので、出勤や予約をお約束するものではありません。<br>
+          ※本診断は相性の目安を提案するもので、<br>出勤や予約をお約束するものではありません。<br>
           ※条件により該当者なしとなる場合もございます。
         </div>
       </div>
@@ -709,7 +709,7 @@ function showResult(){
                 <img src="${c.img}" class="cast-img" onerror="this.src='https://via.placeholder.com/220x320?text=Photo'">
                 <div class="cast-name">${c.name}</div>
                 <div class="cast-spec">${c.spec}</div>
-                <div class="cast-info">${c.realAge}歳 / ${c.style} / ${c.type}</div>
+                <div class="cast-info">${c.realAge}歳 / ${c.style === '普通' ? '普通体型' : c.style} / ${c.type}</div>
                 ${isFirst ? `<div class="cast-memo">${c.memo}</div>` : ''}
                 <div class="cast-actions">
                   <a href="${c.profile}" target="_blank" class="btn btn-sub">詳細を見る</a>
